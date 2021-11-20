@@ -17,13 +17,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::group(['middleware' => ['cors']], function () {
     
+    Route::group(['prefix' => 'usuarios'], function() {
+        Route::post('/login', 'UsuarioController@login');
+    });
+    
+});
+
+Route::group(['middleware' => ['cors', 'tkn']], function () {
+
+
+    Route::group(['prefix' => 'calificaciones'], function() {
+        Route::get('/listarCalificaciones', 'CalificacionController@listarCalificaciones');
+    });
+
     //Pruebas
     Route::group(['prefix' => 'pruebas'], function() {
         Route::get('/prueba', 'TestController@show');
     });
     
 });
-
